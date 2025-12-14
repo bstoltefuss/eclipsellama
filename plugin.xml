@@ -162,11 +162,15 @@
   </extension>
 
   <!-- 🦙 Java Autocomplete -->
-  <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer">
+  <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+             id="com.eclipsellama.plugin.completion.extension">
     <proposalComputer
       id="com.eclipsellama.plugin.completion"
       name="EclipseLlama Completion"
-      class="com.eclipsellama.plugin.completion.EclipseLlamaProposalComputer"/>
+      class="com.eclipsellama.plugin.completion.EclipseLlamaProposalComputer"
+      activate="true">
+      <partition type="__dftl_partition_content_type"/>
+    </proposalComputer>
   </extension>
 
 </plugin>
