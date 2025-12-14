@@ -1,106 +1,122 @@
-# LocalLlama Plugin for Eclipse
+# EclipseLlama 🦙
 
-**LocalLlama** is a privacy-first AI assistant designed to integrate seamlessly with Eclipse. Powered by local Ollama models, it enhances developer productivity through intelligent code interactions, commit message generation, and smart autocompletion—all without sending data to the cloud.
-
----
-
-## 🚀 Features
-
-- **In-IDE Chat with Ollama Models**  
-  Ask questions, get explanations, and discuss your code—all within Eclipse.  
-  Context-aware responses powered by RAG (Retrieval-Augmented Generation) using your indexed project sources.
-
-- **Commit Message Generation**  
-  Automatically generate Conventional Commit messages based on your current Git diff.
-
-- **Smart Code Autocomplete (Experimental)**  
-  Press `Shift+Space` to trigger AI-powered suggestions.  
-  - `Enter` to insert  
-  - Any other key to dismiss
-
-- **Offline Mode**  
-  All features work offline once the model and data are loaded.
-
-- **Customizable Model Settings**  
-  Choose your preferred Ollama model from the plugin's Settings page.
+**A privacy-first AI coding assistant for Eclipse, powered by local Ollama models.**
 
 ---
 
-## 🧠 How It Works
+## ✨ Features
 
-- Uses local Ollama models (e.g. `llama3.1`) for inference  
-- Indexes your project files for context-aware RAG  
-- Communicates with Ollama via local HTTP API  
-- No internet connection required after setup
-
----
-
-## 🖥️ Requirements
-
-| Component   | Minimum Requirement                                          |
-|-------------|--------------------------------------------------------------|
-| **CPU**     | 64-bit, 2+ cores (AVX/AVX2/AVX512 recommended)               |
-| **RAM**     | 8GB for 7B models, 16GB+ for 13B models                      |
-| **Storage** | 12GB+ for Ollama + model files                               |
-| **OS**      | Windows 10 22H2+, macOS Monterey+, or Linux with glibc 2.17+ |
-| **Eclipse** | Eclipse IDE 2023-12 or newer                                 |
-| **Java**    | JavaSE-21 or compatible JDK                                  |
-
+| Feature | Description |
+|---------|-------------|
+| **💬 AI Chat** | Conversation with your local LLM directly in Eclipse |
+| **🔍 Explain Code** | Select code → Right-click → Get AI explanation |
+| **🐛 Fix Code** | AI suggests fixes for selected code |
+| **🧪 Generate Tests** | Auto-generate unit tests for your code |
+| **📝 Add Documentation** | Generate Javadoc comments automatically |
+| **⚡ Smart Autocomplete** | AI-powered code completion suggestions |
+| **🔒 100% Private** | Everything runs locally, no cloud required |
 
 ---
 
-## 🧭 Getting Started
+## 🚀 Quick Start
 
-1. **Install Ollama**  
-   [Download Ollama](https://ollama.com) and start the local server.
+### Prerequisites
 
-2. **Download a Model**  
-   ```bash
-   ollama run llama3.1
-   ```
+1. **Eclipse IDE** 2023-12 or newer
+2. **Java 21** or compatible JDK
+3. **Ollama** installed and running ([Download](https://ollama.com))
 
-3. **Install LocalLlama Plugin**  
-   - Open Eclipse  
-   - Go to `Help > Eclipse Marketplace`  
-   - Search for `"LocalLlama"`  
-   - Click **Install**
+### Install a Code Model
 
-4. **Configure the Plugin**  
-   - Open `Window > Preferences > LocalLlama`  
-   - Select your model (e.g. `llama3.1`)  
-   - Set your workspace indexing options
+```bash
+# Recommended models for coding
+ollama pull codellama
+# or
+ollama pull deepseek-coder
+# or
+ollama pull qwen2.5-coder
+```
 
-5. **Start Coding**  
-   Use the LocalLlama view or auto complete shortcuts to interact with your AI assistant.
+### Install the Plugin
 
----
-
-## 🛠️ Development Notes
-
-- Built with Eclipse RCP and SWT  
-- Uses `plugin.xml` for view and perspective registration  
-- JSON parsing via `json-20240303.jar`  
-- Icon located at `icons/icon.png`  
-- Compatible with Eclipse dark theme
+1. **Download** `EclipseLlama.jar` from releases
+2. Copy to Eclipse's `dropins/` folder
+3. Restart Eclipse
+4. Complete the setup wizard
 
 ---
 
-## 📄 License
+## ⌨️ Keyboard Shortcuts
 
-MIT License. See `LICENSE.md` for details.
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+Shift+L` | Open EclipseLlama Chat |
+| `Ctrl+Shift+E` | Explain Selected Code |
+
+---
+
+## 🎯 Usage
+
+### Chat with AI
+1. Press `Ctrl+Shift+L` or go to **Help → EclipseLlama Chat**
+2. Type your question
+3. Press Enter to send
+
+### Code Actions
+1. Select code in the editor
+2. Right-click → **EclipseLlama** submenu
+3. Choose an action:
+   - 🔍 Explain This Code
+   - 🐛 Fix This Code
+   - 🧪 Generate Tests
+   - 📝 Add Documentation
+
+### Settings
+**Window → Preferences → EclipseLlama**
+- Configure Ollama endpoint URL
+- Select default model
+- Customize commit message prompts
+
+---
+
+## 🛠️ Configuration
+
+Default settings are stored in `~/.eclipsellama/config.properties`:
+
+```properties
+ollama.endpoint=http://localhost:11434
+ollama.model=codellama
+```
+
+---
+
+## 📋 Recommended Models
+
+| Model | Size | Best For |
+|-------|------|----------|
+| `codellama` | 7B | General coding |
+| `codellama:13b` | 13B | Better accuracy |
+| `deepseek-coder` | 6.7B | Fast completions |
+| `qwen2.5-coder` | 7B | Multi-language |
+
+---
+
+## 🔒 Privacy
+
+EclipseLlama runs **entirely on your machine**:
+- ✅ No API keys required
+- ✅ No data sent to cloud
+- ✅ Works offline
+- ✅ Your code stays private
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please open issues for bugs, feature requests, or improvements.
+Issues and pull requests welcome!
 
 ---
 
-## 🔒 Privacy First
+## 📄 License
 
-LocalLlama runs entirely on your machine. No code, metadata, or queries are sent externally. Your workflow stays private.
-
----
-
-```
+MIT License

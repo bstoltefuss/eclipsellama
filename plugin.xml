@@ -1,116 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
-  <!-- 🔹 Perspective -->
+
+  <!-- 🦙 EclipseLlama Perspective -->
   <extension point="org.eclipse.ui.perspectives">
     <perspective
-      name="LocalLlama"
-      icon="icons/images.png"
-      class="com.localllama.plugin.ui.LocalLlamaPerspective"
-      id="com.localllama.plugin.ui.LocalLlamaPerspective"/>
+      name="EclipseLlama"
+      icon="icons/chat.png"
+      class="com.eclipsellama.plugin.ui.EclipseLlamaPerspective"
+      id="com.eclipsellama.plugin.perspective"/>
   </extension>
 
-  <!-- 🔹 Chat View -->
+  <!-- 🦙 Main Chat View -->
   <extension point="org.eclipse.ui.views">
     <view
-      name="LocalLlama"
-      icon="icons/images.png"
-      class="com.localllama.plugin.ui.ChatView"
-      id="com.localllama.plugin.ui.ChatView"/>
+      name="EclipseLlama Chat"
+      icon="icons/chat.png"
+      class="com.eclipsellama.plugin.ui.chat.ChatView"
+      id="com.eclipsellama.plugin.view.chat"/>
   </extension>
 
-  <!-- 🔹 Editor with Autocomplete -->
-  <extension point="org.eclipse.ui.editors">
-    <editor
-      id="com.localllama.plugin.autocomplete.LocalLlamaEditor"
-      name="LocalLlama Editor"
-      icon="icons/images.png"
-      class="com.localllama.plugin.autocomplete.LocalLlamaEditor"
-      extensions="java,txt"/>
-  </extension>
-
-  <!-- 🔹 Place Chat View on Left -->
+  <!-- 🦙 Place Chat View on Left in Perspective -->
   <extension point="org.eclipse.ui.perspectiveExtensions">
-    <perspectiveExtension targetID="com.localllama.plugin.ui.LocalLlamaPerspective">
+    <perspectiveExtension targetID="com.eclipsellama.plugin.perspective">
       <view
-        id="com.localllama.plugin.ui.ChatView"
-        icon="icons/images.png"
-        relative="org.eclipse.ui.editorss"
+        id="com.eclipsellama.plugin.view.chat"
+        relative="org.eclipse.ui.editors"
         relationship="left"
         visible="true"
         ratio="0.25"/>
     </perspectiveExtension>
   </extension>
 
-  <!-- 🔹 First-Time Setup Wizard -->
+  <!-- 🦙 First-Time Setup -->
   <extension point="org.eclipse.ui.startup">
-    <startup class="com.localllama.plugin.setup.SetupWizardLauncher"/>
+    <startup class="com.eclipsellama.plugin.setup.SetupLauncher"/>
   </extension>
 
-  <!-- 🔹 Preferences Page -->
+  <!-- 🦙 Preferences Page -->
   <extension point="org.eclipse.ui.preferencePages">
     <page
-      id="com.localllama.plugin.preferences"
-      name="LocalLlama"
-      icon="icons/images.png"
-      class="com.localllama.plugin.preferences.LocalLlamaPreferencePage"/>
+      id="com.eclipsellama.plugin.preferences"
+      name="EclipseLlama"
+      icon="icons/setting.png"
+      class="com.eclipsellama.plugin.preferences.EclipseLlamaPreferencePage"/>
   </extension>
 
-  <!-- 🔹 Command Category -->
+  <!-- 🦙 Commands -->
   <extension point="org.eclipse.ui.commands">
     <category
-      id="com.localllama.plugin.category"
-      name="LocalLlama Commands"/>
-  </extension>
-
-  <!-- 🔹 Setup Wizard Command -->
-  <extension point="org.eclipse.ui.commands">
+      id="com.eclipsellama.plugin.category"
+      name="EclipseLlama"/>
+    
+    <!-- Open Chat -->
     <command
-      id="com.localllama.plugin.setup.command"
-      name="Run LocalLlama Setup Wizard"
-      categoryId="com.localllama.plugin.category"/>
+      id="com.eclipsellama.plugin.command.openChat"
+      name="Open EclipseLlama Chat"
+      description="Open the EclipseLlama chat view"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Explain Code -->
+    <command
+      id="com.eclipsellama.plugin.command.explainCode"
+      name="Explain Code"
+      description="Explain selected code with AI"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Fix Code -->
+    <command
+      id="com.eclipsellama.plugin.command.fixCode"
+      name="Fix Code"
+      description="Suggest fixes for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Generate Tests -->
+    <command
+      id="com.eclipsellama.plugin.command.generateTests"
+      name="Generate Tests"
+      description="Generate unit tests for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Document Code -->
+    <command
+      id="com.eclipsellama.plugin.command.documentCode"
+      name="Add Documentation"
+      description="Generate Javadoc for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
   </extension>
 
+  <!-- 🦙 Command Handlers -->
   <extension point="org.eclipse.ui.handlers">
     <handler
-      commandId="com.localllama.plugin.setup.command"
-      class="com.localllama.plugin.setup.SetupWizardHandler"/>
-  </extension>
-
-  <!-- 🔹 Reopen Chat View Command -->
-  <extension point="org.eclipse.ui.commands">
-	<command
-        id="com.localllama.plugin.command.openChatView"
-        name="Open Localllama Chat View"
-        description="Reopen the LocalLlama Chat View"
-        categoryId="com.localllama.plugin.category"/>
-
-  </extension>
-
-  <extension point="org.eclipse.ui.handlers">
+      commandId="com.eclipsellama.plugin.command.openChat"
+      class="com.eclipsellama.plugin.handlers.OpenChatHandler"/>
     <handler
-      commandId="com.localllama.plugin.command.openChatView"
-      class="com.localllama.plugin.handlers.OpenChatViewHandler"/>
+      commandId="com.eclipsellama.plugin.command.explainCode"
+      class="com.eclipsellama.plugin.handlers.ExplainCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.fixCode"
+      class="com.eclipsellama.plugin.handlers.FixCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.generateTests"
+      class="com.eclipsellama.plugin.handlers.GenerateTestsHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.documentCode"
+      class="com.eclipsellama.plugin.handlers.DocumentCodeHandler"/>
   </extension>
 
+  <!-- 🦙 Context Menu for Java Editor -->
   <extension point="org.eclipse.ui.menus">
-    <menuContribution locationURI="menu:help">
+    <!-- Help Menu Entry -->
+    <menuContribution locationURI="menu:help?after=additions">
       <command
-        commandId="com.localllama.plugin.command.openChatView"
-        label="Reopen LocalLlama Chat"
-        icon="icons/images.png"
-        style="push"/>
+        commandId="com.eclipsellama.plugin.command.openChat"
+        label="EclipseLlama Chat"
+        icon="icons/chat.png"/>
+    </menuContribution>
+    
+    <!-- Editor Context Menu -->
+    <menuContribution locationURI="popup:org.eclipse.jdt.ui.CompilationUnitEditor?after=additions">
+      <menu
+        id="com.eclipsellama.plugin.menu"
+        label="EclipseLlama"
+        icon="icons/chat.png">
+        <command
+          commandId="com.eclipsellama.plugin.command.explainCode"
+          label="🔍 Explain This Code"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.fixCode"
+          label="🐛 Fix This Code"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.generateTests"
+          label="🧪 Generate Tests"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.documentCode"
+          label="📝 Add Documentation"
+          style="push"/>
+        <separator name="separator1"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.openChat"
+          label="💬 Open Chat"
+          style="push"/>
+      </menu>
     </menuContribution>
   </extension>
 
-  <!-- 🔹 Java Autocomplete -->
-	<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer">
+  <!-- 🦙 Keyboard Shortcuts -->
+  <extension point="org.eclipse.ui.bindings">
+    <key
+      commandId="com.eclipsellama.plugin.command.openChat"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="Ctrl+Shift+L"/>
+    <key
+      commandId="com.eclipsellama.plugin.command.explainCode"
+      contextId="org.eclipse.jdt.ui.javaEditorScope"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="Ctrl+Shift+E"/>
+  </extension>
+
+  <!-- 🦙 Java Autocomplete -->
+  <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer">
     <proposalComputer
-            id="com.localllama.plugin.autocomplete.proposals"
-            name="LocalLlama Proposals"
-            class="com.localllama.plugin.autocomplete.LocalLlamaProposalComputer">
-        <!-- You can assign to a category if you want it grouped differently.
-             If unsure, omit categoryId or use a known JDT category. -->
-    </proposalComputer>
-	</extension>
+      id="com.eclipsellama.plugin.completion"
+      name="EclipseLlama Completion"
+      class="com.eclipsellama.plugin.completion.EclipseLlamaProposalComputer"/>
+  </extension>
 
 </plugin>
