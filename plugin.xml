@@ -116,32 +116,37 @@
         icon="icons/chat.png"/>
     </menuContribution>
     
-    <!-- Editor Context Menu -->
-    <menuContribution locationURI="popup:org.eclipse.jdt.ui.CompilationUnitEditor?after=additions">
+    <!-- Universal Popup Menu - Works Everywhere -->
+    <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
       <menu
         id="com.eclipsellama.plugin.menu"
         label="EclipseLlama"
         icon="icons/chat.png">
         <command
           commandId="com.eclipsellama.plugin.command.explainCode"
-          label="🔍 Explain This Code"
+          label="Explain This Code"
           style="push"/>
         <command
           commandId="com.eclipsellama.plugin.command.fixCode"
-          label="🐛 Fix This Code"
+          label="Fix This Code"
           style="push"/>
         <command
           commandId="com.eclipsellama.plugin.command.generateTests"
-          label="🧪 Generate Tests"
+          label="Generate Tests"
           style="push"/>
         <command
           commandId="com.eclipsellama.plugin.command.documentCode"
-          label="📝 Add Documentation"
+          label="Add Documentation"
           style="push"/>
         <separator name="separator1"/>
         <command
+          commandId="com.eclipsellama.plugin.command.generateCommit"
+          label="Generate Commit Message"
+          style="push"/>
+        <separator name="separator2"/>
+        <command
           commandId="com.eclipsellama.plugin.command.openChat"
-          label="💬 Open Chat"
+          label="Open Chat"
           style="push"/>
       </menu>
     </menuContribution>
