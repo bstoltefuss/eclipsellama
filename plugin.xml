@@ -85,6 +85,13 @@
       name="Add Documentation"
       description="Generate Javadoc for selected code"
       categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Generate Commit Message -->
+    <command
+      id="com.eclipsellama.plugin.command.generateCommit"
+      name="Generate Commit Message"
+      description="Generate AI commit message from git diff"
+      categoryId="com.eclipsellama.plugin.category"/>
   </extension>
 
   <!-- 🦙 Command Handlers -->
@@ -104,6 +111,9 @@
     <handler
       commandId="com.eclipsellama.plugin.command.documentCode"
       class="com.eclipsellama.plugin.handlers.DocumentCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.generateCommit"
+      class="com.eclipsellama.plugin.handlers.GenerateCommitHandler"/>
   </extension>
 
   <!-- 🦙 Context Menu for Java Editor -->
