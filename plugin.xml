@@ -1,43 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 
-   <!-- 🔹 Perspective -->
-   <extension point="org.eclipse.ui.perspectives">
-      <perspective
-            name="OllamAssist"
-            class="com.ollamassist.plugin.ui.OllamPerspective"
-            id="com.ollamassist.plugin.ui.OllamPerspective"/>
-   </extension>
+  <!-- 🦙 EclipseLlama Perspective -->
+  <extension point="org.eclipse.ui.perspectives">
+    <perspective
+      name="EclipseLlama"
+      icon="icons/chat.png"
+      class="com.eclipsellama.plugin.ui.EclipseLlamaPerspective"
+      id="com.eclipsellama.plugin.perspective"/>
+  </extension>
 
-   <!-- 🔹 Chat View -->
-   <extension point="org.eclipse.ui.views">
+  <!-- 🦙 Main Chat View -->
+  <extension point="org.eclipse.ui.views">
+    <view
+      name="EclipseLlama Chat"
+      icon="icons/chat.png"
+      class="com.eclipsellama.plugin.ui.chat.ChatView"
+      id="com.eclipsellama.plugin.view.chat"/>
+  </extension>
+
+  <!-- 🦙 Place Chat View on Left in Perspective -->
+  <extension point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="com.eclipsellama.plugin.perspective">
       <view
-            name="OllamAssist"
-            class="com.ollamassist.plugin.ui.ChatView"
-            id="com.ollamassist.plugin.ui.ChatView"/>
-   </extension>
+        id="com.eclipsellama.plugin.view.chat"
+        relative="org.eclipse.ui.editors"
+        relationship="left"
+        visible="true"
+        ratio="0.25"/>
+    </perspectiveExtension>
+  </extension>
 
-   <!-- 🔹 Editor with Autocomplete -->
-   <extension point="org.eclipse.ui.editors">
-      <editor
-            id="com.ollamassist.plugin.autocomplete.OllamaEditor"
-            name="Ollama Editor"
-            icon="icons/editor.png"
-            class="com.ollamassist.plugin.autocomplete.OllamaEditor"
-            extensions="java,txt"/>
-   </extension>
+  <!-- 🦙 First-Time Setup -->
+  <extension point="org.eclipse.ui.startup">
+    <startup class="com.eclipsellama.plugin.setup.SetupLauncher"/>
+  </extension>
 
-   <!-- 🔹 Place Chat View on Left -->
-   <extension point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="com.ollamassist.plugin.ui.OllamPerspective">
-         <view
-      id="com.ollamassist.plugin.ui.ChatView"
-      relative="org.eclipse.ui.editors"
-      relationship="left"
-      visible="true"
-      ratio="0.25"/>
+  <!-- 🦙 Preferences Page -->
+  <extension point="org.eclipse.ui.preferencePages">
+    <page
+      id="com.eclipsellama.plugin.preferences"
+      name="EclipseLlama"
+      icon="icons/setting.png"
+      class="com.eclipsellama.plugin.preferences.EclipseLlamaPreferencePage"/>
+  </extension>
 
-      </perspectiveExtension>
-   </extension>
+  <!-- 🦙 Commands -->
+  <extension point="org.eclipse.ui.commands">
+    <category
+      id="com.eclipsellama.plugin.category"
+      name="EclipseLlama"/>
+    
+    <!-- Open Chat -->
+    <command
+      id="com.eclipsellama.plugin.command.openChat"
+      name="Open EclipseLlama Chat"
+      description="Open the EclipseLlama chat view"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Explain Code -->
+    <command
+      id="com.eclipsellama.plugin.command.explainCode"
+      name="Explain Code"
+      description="Explain selected code with AI"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Fix Code -->
+    <command
+      id="com.eclipsellama.plugin.command.fixCode"
+      name="Fix Code"
+      description="Suggest fixes for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Generate Tests -->
+    <command
+      id="com.eclipsellama.plugin.command.generateTests"
+      name="Generate Tests"
+      description="Generate unit tests for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Document Code -->
+    <command
+      id="com.eclipsellama.plugin.command.documentCode"
+      name="Add Documentation"
+      description="Generate Javadoc for selected code"
+      categoryId="com.eclipsellama.plugin.category"/>
+    
+    <!-- Generate Commit Message -->
+    <command
+      id="com.eclipsellama.plugin.command.generateCommit"
+      name="Generate Commit Message"
+      description="Generate AI commit message from git diff"
+      categoryId="com.eclipsellama.plugin.category"/>
+  </extension>
+
+  <!-- 🦙 Command Handlers -->
+  <extension point="org.eclipse.ui.handlers">
+    <handler
+      commandId="com.eclipsellama.plugin.command.openChat"
+      class="com.eclipsellama.plugin.handlers.OpenChatHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.explainCode"
+      class="com.eclipsellama.plugin.handlers.ExplainCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.fixCode"
+      class="com.eclipsellama.plugin.handlers.FixCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.generateTests"
+      class="com.eclipsellama.plugin.handlers.GenerateTestsHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.documentCode"
+      class="com.eclipsellama.plugin.handlers.DocumentCodeHandler"/>
+    <handler
+      commandId="com.eclipsellama.plugin.command.generateCommit"
+      class="com.eclipsellama.plugin.handlers.GenerateCommitHandler"/>
+  </extension>
+
+  <!-- 🦙 Context Menu for Java Editor -->
+  <extension point="org.eclipse.ui.menus">
+    <!-- Help Menu Entry -->
+    <menuContribution locationURI="menu:help?after=additions">
+      <command
+        commandId="com.eclipsellama.plugin.command.openChat"
+        label="EclipseLlama Chat"
+        icon="icons/chat.png"/>
+    </menuContribution>
+    
+    <!-- Universal Popup Menu - Works Everywhere -->
+    <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+      <menu
+        id="com.eclipsellama.plugin.menu"
+        label="EclipseLlama"
+        icon="icons/chat.png">
+        <command
+          commandId="com.eclipsellama.plugin.command.explainCode"
+          label="Explain This Code"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.fixCode"
+          label="Fix This Code"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.generateTests"
+          label="Generate Tests"
+          style="push"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.documentCode"
+          label="Add Documentation"
+          style="push"/>
+        <separator name="separator1"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.generateCommit"
+          label="Generate Commit Message"
+          style="push"/>
+        <separator name="separator2"/>
+        <command
+          commandId="com.eclipsellama.plugin.command.openChat"
+          label="Open Chat"
+          style="push"/>
+      </menu>
+    </menuContribution>
+  </extension>
+
+  <!-- 🦙 Keyboard Shortcuts -->
+  <extension point="org.eclipse.ui.bindings">
+    <key
+      commandId="com.eclipsellama.plugin.command.openChat"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="Ctrl+Shift+L"/>
+    <key
+      commandId="com.eclipsellama.plugin.command.explainCode"
+      contextId="org.eclipse.jdt.ui.javaEditorScope"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="Ctrl+Shift+E"/>
+  </extension>
+
+  <!-- 🦙 Java Autocomplete -->
+  <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+             id="com.eclipsellama.plugin.completion.extension">
+    <proposalComputer
+      id="com.eclipsellama.plugin.completion"
+      name="EclipseLlama Completion"
+      class="com.eclipsellama.plugin.completion.EclipseLlamaProposalComputer"
+      activate="true">
+      <partition type="__dftl_partition_content_type"/>
+    </proposalComputer>
+  </extension>
 
 </plugin>

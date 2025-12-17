@@ -1,0 +1,22 @@
+# Compiled class files
+bin/
+target/
+
+# Eclipse project files that can be regenerated
+.settings/
+
+# IDE specific
+.idea/
+*.iml
+
+# Build outputs
+export/
+*.jar
+!lib/*.jar
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
