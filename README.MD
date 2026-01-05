@@ -44,6 +44,14 @@ ollama pull qwen2.5-coder
 3. Restart Eclipse
 4. Complete the setup wizard
 
+### Install from Update Site
+
+1. In Eclipse, go to **Help → Install New Software...**
+2. Click **Add...**
+3. Enter Name: `EclipseLlama`
+4. Enter Location: `https://vijaytank.github.io/eclipsellama/updatesite/`
+5. Click **Add**, select **EclipseLlama**, and follow the wizard.
+
 ---
 
 ## ⌨️ Keyboard Shortcuts
