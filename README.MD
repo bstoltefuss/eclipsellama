@@ -1,6 +1,8 @@
 # EclipseLlama 🦙
 
-**A privacy-first AI coding assistant for Eclipse, powered by local Ollama models.**
+Topics: eclipse-plugin, ollama, local-llm, ai-coding-assistant, java, eclipse-ide
+
+**A privacy-first AI coding assistant for Eclipse IDE, powered by local Ollama models like CodeLlama and DeepSeek Coder. Features: AI chat, code explanation, bug fixes, test generation, Javadoc. 100% local, no cloud.**
 
 ---
 
