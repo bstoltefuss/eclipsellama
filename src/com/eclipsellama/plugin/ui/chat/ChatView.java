@@ -250,7 +250,7 @@ public class ChatView extends ViewPart {
     }
 
     private void sendMessage() {
-        String input = inputField.getText().trim();
+        String input = inputField.getText().trim().replace("\r", "");
         if (input.isEmpty() || isStreaming) {
             return;
         }
@@ -311,7 +311,7 @@ public class ChatView extends ViewPart {
 
         // Message content
         StyledText messageText = new StyledText(bubble, SWT.WRAP | SWT.READ_ONLY);
-        messageText.setText(content);
+        //messageText.setText(content);
         messageText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         messageText.setBackground(bgColor);
         messageText.setWordWrap(true);
@@ -338,14 +338,21 @@ public class ChatView extends ViewPart {
     private void applyMarkdownStyles(StyledText textWidget, String content) {
         List<MarkdownRenderer.StyledSegment> segments = markdownRenderer.parse(content);
 
-        int offset = 0;
-        for (MarkdownRenderer.StyledSegment segment : segments) {
-            StyleRange range = markdownRenderer.createStyleRange(segment, offset);
-            if (range != null) {
-                textWidget.setStyleRange(range);
-            }
-            offset += segment.text.length();
+        StringBuilder visualText = new StringBuilder();
+        List<StyleRange> ranges = new ArrayList<>();
+
+        for (MarkdownRenderer.StyledSegment seg : segments) {
+            int start = visualText.length();
+            visualText.append(seg.text); // Hier kommt NUR der bereinigte Inhalt rein
+            
+            StyleRange sr = markdownRenderer.createStyleRange(seg, start);
+            if (sr != null) ranges.add(sr);
         }
+
+        // Damit Windows nicht eigenmächtig \r\n einbaut, setzen wir den Text 
+        // und die Ranges in einem Rutsch.
+        textWidget.setText(visualText.toString());
+        textWidget.setStyleRanges(ranges.toArray(new StyleRange[0]));
     }
 
     /**
