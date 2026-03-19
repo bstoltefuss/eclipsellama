@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
 import com.eclipsellama.plugin.core.ChatMessage;
+import com.eclipsellama.plugin.core.ClientProvider;
 import com.eclipsellama.plugin.core.OllamaClient;
 import com.eclipsellama.plugin.preferences.EclipseLlamaPreferences;
 
@@ -223,10 +224,10 @@ public class ChatView extends ViewPart {
         modelCombo.removeAll();
 
         new Thread(() -> {
-            String[] models = OllamaClient.getAvailableModels();
+            String[] models = ClientProvider.getClient().getAvailableModels();
             Display.getDefault().asyncExec(() -> {
                 if (models.length == 0) {
-                    statusLabel.setText("⚠️ No models found. Is Ollama running?");
+                    statusLabel.setText("⚠️ No models found. Is endpoint running?");
                     for (String model : EclipseLlamaPreferences.getRecommendedCodeModels()) {
                         modelCombo.add(model);
                     }
@@ -274,7 +275,7 @@ public class ChatView extends ViewPart {
         // Create assistant bubble for streaming
         currentAssistantBubble = addMessageBubble("🦙 EclipseLlama", "", false);
 
-        OllamaClient.streamChat(
+        ClientProvider.getClient().streamChat(
                 conversation,
                 model,
                 this::onChunk,
