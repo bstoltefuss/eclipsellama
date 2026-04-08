@@ -19,7 +19,7 @@ import com.eclipsellama.plugin.preferences.EclipseLlamaPreferences;
 
 public class OllamaClient implements LLMClient {
 
-    private static final int CONNECT_TIMEOUT = 10000;
+    private static final int CONNECT_TIMEOUT = 60000;
     private static final int READ_TIMEOUT = 120000;
 
     public OllamaClient() {
