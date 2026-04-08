@@ -135,6 +135,7 @@ public class EclipseLlamaPreferencePage extends PreferencePage implements IWorkb
     }
 
     private void testConnection() {
+		savePreferences();
         statusLabel.setText("Testing...");
 
         new Thread(() -> {
@@ -151,6 +152,7 @@ public class EclipseLlamaPreferencePage extends PreferencePage implements IWorkb
     }
 
     private void refreshModels() {
+		savePreferences();
         new Thread(() -> {
             String[] models = ClientProvider.getClient().getAvailableModels();
             Display.getDefault().asyncExec(() -> {
